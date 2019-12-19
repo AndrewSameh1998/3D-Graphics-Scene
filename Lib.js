@@ -18,18 +18,18 @@ var scene = new THREE.Scene();
         });
         var light = new THREE.PointLight(0xffffff, 1 ,500);
             light.position.set(10,0,25);
-        scene.add(light);
+        var light2 = new THREE.AmbientLight(0xf0f0f0);
+            
+       // scene.add(light);
+        scene.add(light2);
 
         var mtlLoader = new THREE.MTLLoader();
-     //   mtlLoader.setTexturePath('/examples/3d-obj-loader/assets/');
-     //   mtlLoader.setPath('/examples/3d-obj-loader/assets/');
         mtlLoader.load('New Folder/r2-d2.mtl', function (materials) {
  
             materials.preload();
  
             var objLoader = new THREE.OBJLoader();
             objLoader.setMaterials(materials);
-          //  objLoader.setPath('/examples/3d-obj-loader/assets/');
             objLoader.load('New Folder/r2-d2.obj', function (object) {
  
                 scene.add(object);
@@ -47,16 +47,22 @@ var render = function (){
     window.onkeydown = function(e) {
     var key = e.keyCode ? e.keyCode : e.which;
     if (key == 38) {
-        camera.position.z += 1;
+        camera.position.z -= 0.8;
     }
     else if (key == 40) {
-        camera.position.z -= 1;
+        camera.position.z += 0.8;
     }    
     else if (key == 39){
-        mesh.rotation.y +=1
+        mesh.rotation.y +=0.1
     }
     else if (key == 37){
-        mesh.position.x -=1
+        mesh.rotation.y -=0.1
+    }
+    else if (key == 87){
+        mesh.position.y +=1
+    }
+    else if (key == 83){
+        mesh.position.y -=1
     }
 
     }
