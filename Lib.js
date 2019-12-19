@@ -1,78 +1,78 @@
-function main(){
-var scene = new THREE.Scene();
+var container, 
+    renderer, 
+    scene, 
+    camera, 
+    mesh, 
+    start = Date.now(),
+    fov = 30;
 
-        var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
-        camera.position.z = 5;
+var clock = new THREE.Clock();
 
-        var renderer = new THREE.WebGLRenderer({antialias: true});
-        renderer.setClearColor("#e5e5e5");
-        renderer.setSize(window.innerWidth,window.innerHeight);
+var timeUniform = {
+	iGlobalTime: {
+		type: 'f',
+		value: 0.1
+	},
+	iResolution: {
+		type: 'v2',
+		value: new THREE.Vector2()
+	}
+};
 
-        document.body.appendChild(renderer.domElement);
+timeUniform.iResolution.value.x = window.innerWidth;
+timeUniform.iResolution.value.y = window.innerHeight;
 
-        window.addEventListener('resize', () => {
+window.addEventListener('load', function() {
+  container = document.getElementById('container');
+  scene = new THREE.Scene();
+  
+  camera = new THREE.PerspectiveCamera( 
+    fov, 
+    window.innerWidth / window.innerHeight, 
+    1, 
+    10000
+  );
+  camera.position.x = 20;    
+  camera.position.y = 10;    
+  camera.position.z = 20;
+  camera.lookAt(scene.position);
+  scene.add(camera);
+  
+  var axis = new THREE.AxisHelper(10);
+  scene.add (axis);
+  
+  material = new THREE.ShaderMaterial({
+    uniforms: timeUniform,
+    vertexShader: document.getElementById('vertex-shader').textContent,
+    fragmentShader: document.getElementById('fragment-shader').textContent
+  });
+  
+  var water = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight, 40), material
+  );
+  scene.add(water);
+  
+  var geometry = new THREE.SphereGeometry( 10, 32, 32 );
+  var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+  var sphere = new THREE.Mesh( geometry, material );
+  scene.add( sphere );
 
-            renderer.setSize(window.innerWidth,window.innerHeight);
-            camera.aspect = window.innerWidth/ window.innerHeight;
-            camera.updateProjectionMatrix();
-        });
-        var light = new THREE.PointLight(0xffffff, 1 ,500);
-            light.position.set(10,0,25);
-        var light2 = new THREE.AmbientLight(0xf0f0f0);
-            
-       // scene.add(light);
-        scene.add(light2);
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  
+  container.appendChild( renderer.domElement );
 
-        var mtlLoader = new THREE.MTLLoader();
-        mtlLoader.load('New Folder/r2-d2.mtl', function (materials) {
- 
-            materials.preload();
- 
-            var objLoader = new THREE.OBJLoader();
-            objLoader.setMaterials(materials);
-            objLoader.load('New Folder/r2-d2.obj', function (object) {
- 
-                scene.add(object);
-                mesh = object;
-                object.position.y -= 60;
-                object.position.z -= 60;
- 
-    });
- 
+  render();
 });
-var render = function (){
 
-    requestAnimationFrame(render);
+window.addEventListener('resize',function() {
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+	renderer.setSize(window.innerWidth, window.innerHeight);
+});
 
-    window.onkeydown = function(e) {
-    var key = e.keyCode ? e.keyCode : e.which;
-    if (key == 38) {
-        camera.position.z -= 0.8;
-    }
-    else if (key == 40) {
-        camera.position.z += 0.8;
-    }    
-    else if (key == 39){
-        mesh.rotation.y +=0.1
-    }
-    else if (key == 37){
-        mesh.rotation.y -=0.1
-    }
-    else if (key == 87){
-        mesh.position.y +=1
-    }
-    else if (key == 83){
-        mesh.position.y -=1
-    }
-
-    }
-
-    renderer.render(scene,camera);
+function render() {
+  timeUniform.iGlobalTime.value += clock.getDelta();
+  renderer.render(scene, camera);
+  requestAnimationFrame(render);
 }
-
-       render();
-
-    }
-
-
-    main();
