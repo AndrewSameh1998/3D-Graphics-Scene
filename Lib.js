@@ -256,7 +256,7 @@
                 } );
         
                  gltf3.scene.scale.set(50,50,50)
-                 gltf3.scene.position.set(9000,0,0);
+                 gltf3.scene.position.set(9000,0,3750);
         
                 scene.add( gltf3.scene );
                                     
