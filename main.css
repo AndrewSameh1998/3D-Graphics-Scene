@@ -1,21 +1,54 @@
-body { 
-    margin: 0; 
-    height: 100vh;
-}
-  
-canvas { 
-    display: block;
+body {
+	margin: 0;
+	background-color: #000;
+	color: #fff;
+	font-family: Monospace;
+	font-size: 13px;
+	line-height: 24px;
+	overscroll-behavior: none;
 }
 
-h1 {
-    position: absolute;
-    top: 2em;
-    left: 2em;
-    font-family: 'Montserrat';
-    font-size: 7em;
-    text-transform: uppercase;
-    width: auto;
-    line-height: .8em;
-    border: 5px solid black;
-    padding: .2em;
-  }
+a {
+	color: #ff0;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+button {
+	cursor: pointer;
+	text-transform: uppercase;
+}
+
+canvas {
+	display: block;
+}
+
+#info {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	text-align: center;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	z-index: 1; /* TODO Solve this in HTML */
+}
+
+a, button, input, select {
+	pointer-events: auto;
+}
+
+.dg.ac {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	z-index: 2 !important; /* TODO Solve this in HTML */
+}
