@@ -54,7 +54,7 @@
 				//
 
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 2000000 );
-				camera.position.set( 30, 30, 100 );
+				camera.position.set( -1000, 250, 150 );
 
 				//
 
@@ -166,19 +166,21 @@
 			const objLoader4 = new OBJLoader2();
 			objLoader4.addMaterials(materials4);
     		objLoader4.load('models/obj/Cruisership 2012/Cruiser 2012.obj', (root4) => {
-				root4.position.set(600,-5,600);
+				root4.scale.set(2,2,2);
+				root4.position.set(800,-5,800);
 				mesh4 = root4;
 				scene.add(root4);
 			  });
 		  });
 		  // Object 5
 		  const mtlLoader5 = new MTLLoader();
-  			mtlLoader5.load('models/obj/Cruisership 2012/Cruiser_2012.mtl', (mtlParseResult4) => {
+  			mtlLoader5.load('models/obj/Small Tropical Island/Small_Tropical_Island.mtl', (mtlParseResult5) => {
     		const materials5 =  MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult5);
 			const objLoader5 = new OBJLoader2();
 			objLoader5.addMaterials(materials5);
-    		objLoader5.load('models/obj/Cruisership 2012/Cruiser 2012.obj', (root5) => {
-				root5.position.set(600,-5,600);
+    		objLoader5.load('models/obj/Small Tropical Island/Small Tropical Island.obj', (root5) => {
+				root5.scale.set(40,40,40);
+				root5.position.set(40000,-5,0);
 				mesh5 = root5;
 				scene.add(root5);
 			  });
